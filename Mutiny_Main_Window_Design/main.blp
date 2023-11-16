@@ -1,0 +1,123 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.ApplicationWindow {
+  width-request: 360;
+  height-request: 294;
+  default-width: 1440;
+  default-height: 680;
+
+  Adw.Breakpoint {
+    condition ("max-width: 860sp")
+    setters {
+      outer_view.collapsed: true;
+    }
+  }
+  
+  Adw.Breakpoint {
+    condition ("max-width: 500sp")
+    setters {
+      outer_view.collapsed: true;
+      inner_view.collapsed: true;
+    }
+  }
+
+  content: Adw.OverlaySplitView outer_view {
+    max-sidebar-width: 290;
+    
+    sidebar: Adw.NavigationPage {
+      Adw.StatusPage {
+            title: "MainBar";
+      }
+    };
+    
+    content: Adw.NavigationSplitView inner_view {
+      min-sidebar-width: 290;
+      max-sidebar-width: 320;
+      sidebar-width-fraction: 0.355;
+      
+      sidebar: Adw.NavigationPage {
+          [top]
+          Adw.HeaderBar {
+            show-title: true;
+          }
+
+          Adw.StatusPage {
+            title: _("SecondBar");
+
+            Button button {
+              visible: false;
+              halign: center;
+              can-shrink: true;
+              label: _("Open Content");
+              action-name: "navigation.push";
+              action-target: "'content'";
+              styles ["pill"]
+            }
+          }
+        };
+        
+        content: Adw.NavigationPage {
+          title: _("Content");
+          tag: "content";
+          child: Adw.ToolbarView {
+
+            [top]
+            Adw.HeaderBar {
+              show-title: true;
+              title-widget: Adw.WindowTitle {
+                title: "Content";
+                subtitle: "Content description";
+              };
+              
+              [start]
+              Button {
+                label: _("Toggle Sidebar");
+                icon-name: "dock-left-symbolic";
+              }
+              
+              [end]
+              MenuButton channel_header_menu_button {
+                menu-model: channel_header_menu;
+                icon-name: "view-more-symbolic";
+              } 
+            }
+
+            content: Adw.StatusPage {
+              title: _("Content");
+
+              LinkButton {
+                label: _("API Reference");
+                uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.NavigationSplitView.html";
+              }
+            };
+            
+            [bottom]
+            ActionBar {
+              [center]
+              Box {
+                Button add_attachments_button {
+                  label: _("Add attachments");
+                  icon-name: "mail-attachment-symbolic";
+                }
+                Entry{
+                  
+                }
+              } 
+            }
+          };
+        };
+    };
+  };
+}
+
+menu channel_header_menu {
+  section actions {
+    item ("Search")
+  }
+  
+  section information {
+    item ("Channel Details")
+    item ("Members")
+  }
+}
