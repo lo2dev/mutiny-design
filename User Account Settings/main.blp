@@ -1,0 +1,203 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.Window {
+  width-request: 560;
+  height-request: 660;
+  content: Box {
+    orientation: vertical;
+
+    Adw.HeaderBar {
+      centering-policy: strict;
+      title-widget: Adw.ViewSwitcherTitle switcher_title {
+        stack: stack;
+        title: _("Account Settings");
+      };
+    }
+
+    Adw.ViewStack stack {
+      vexpand: true;
+
+      Adw.ViewStackPage page1 {
+        name: "page1";
+        title: _("Account");
+        icon-name: "person-symbolic";
+        use-underline: true;
+        child: ScrolledWindow {
+          child: Adw.Clamp {
+            maximum-size: 500;
+            
+            Box {
+              orientation: vertical;
+              margin-start: 10;
+              margin-end: 10;
+              margin-top: 25;
+              margin-bottom: 25;
+              spacing: 25;
+              
+              // TODO: add user banner
+              
+              Adw.Avatar {
+                text: bind display_name.text;
+                show-initials: true;
+                size: 130;
+              }
+              
+              ListBox {
+                selection-mode: none;
+                styles ["boxed-list"]
+                
+                Adw.EntryRow display_name {
+                  title: _("Display Name");
+                  text: "ikoli";
+                }
+                
+                // TODO: use an actionrow to be able to spawn a dialog to ask for new username and password verification
+                Adw.EntryRow {
+                  title: _("Username");
+                  text: "loki#7571";
+                  show-apply-button: true;
+                  // text-length: 32; // should be available since libadw 1.5
+                }
+                
+                Adw.ActionRow {
+                  title: _("User ID");
+                  subtitle: "01G8914GKC48X0KYP1DPH5E1WM";
+                  subtitle-selectable: true;
+                  use-underline: true;
+                  styles ["property"]
+                  activatable-widget: Button {
+                    label: _("Copy User ID");
+                    icon-name: "edit-copy-symbolic";
+                  };
+                }
+              }
+              
+              // TODO: add description
+              ListBox {
+                selection-mode: none;
+                styles ["boxed-list"]
+                
+                Adw.ActionRow {
+                  title: _("TODO");
+                  subtitle: "Add description";
+                }
+              }
+              
+              ListBox {
+                selection-mode: none;
+                styles ["boxed-list"]
+                
+                Adw.PasswordEntryRow {
+                  title: _("Email");
+                  text: "yourmom@myhouse.cum";
+                  show-apply-button: true;
+                }
+                
+                Adw.PasswordEntryRow {
+                  title: _("Password");
+                  text: "holymolyholymolyholymoylhonlym";
+                  show-apply-button: true;
+                }
+              }
+
+              ListBox {
+                selection-mode: none;
+                styles ["boxed-list"]
+                
+                Adw.SwitchRow {
+                  title: _("Two-factor Authentication");
+                }
+              }
+              
+              Box {
+              orientation: vertical;
+              spacing: 10;
+                Button {
+                  label: _("Disable Account");
+                  styles ["destructive-action", "pill"]
+                }
+                Button {
+                  label: _("Delete Account");
+                  styles ["destructive-action", "pill"]
+                }
+              }
+                
+            }
+          };
+        };
+      }
+
+      Adw.ViewStackPage page2 {
+        name: "page2";
+        title: _("Sessions");
+        icon-name: "computer-symbolic";
+        badge-number: 0;
+        needs-attention: true;
+        use-underline: true;
+        child: ScrolledWindow {
+          child: Adw.Clamp {
+            maximum-size: 500;
+            
+            Box {
+              orientation: vertical;
+              margin-start: 10;
+              margin-end: 10;
+              margin-top: 25;
+              margin-bottom: 25;
+              spacing: 25;
+              
+              ListBox {
+                selection-mode: none;
+                styles ["boxed-list"]
+                
+                Adw.ActionRow {
+                  title: _("Firefox on Windows 10");
+                  subtitle: _("Created a month ago");
+                  icon-name: "earth-symbolic";
+                  styles ["accent"]
+                }
+              }
+              
+              ListBox {
+                selection-mode: none;
+                styles ["boxed-list"]
+                
+                Adw.ActionRow {
+                  title: _("Firefox on Windows 10");
+                  subtitle: _("Created a month ago");
+                  icon-name: "earth-symbolic";
+                  
+                  activatable-widget: Button {
+                    label: _("Disconnect from Session");
+                    icon-name: "arrow-into-box-symbolic";
+                  };
+                }
+              }
+            }
+          };
+        };
+      }
+
+      Adw.ViewStackPage page4 {
+        name: "page4";
+        title: _("Bots");
+        icon-name: "brain-augemnted-symbolic";
+        use-underline: true;
+        child: Adw.StatusPage{
+          title: bind page4.title;
+          icon-name: bind page4.icon-name;
+          child: Box{
+            orientation: vertical;
+            valign: center;
+          };
+        };
+      }
+    }
+
+    Adw.ViewSwitcherBar switcher_bar {
+      stack: stack;
+      reveal: bind switcher_title.title-visible;
+    }
+  };
+}

@@ -177,35 +177,45 @@ Adw.ApplicationWindow {
               } 
             }
 
-            content: Adw.StatusPage {
-              icon-name: "chat-bubbles-empty-inverted-symbolic";
-              title: _("No messages yet");
-              description: _("No one has sent a message in this channel yet");
+            content: ScrolledWindow {
+              child: Adw.Clamp chat_clamp {
+              maximum-size: 1000;
+                Adw.StatusPage {
+                  icon-name: "chat-bubbles-empty-inverted-symbolic";
+                  title: _("No messages yet");
+                  description: _("No one has sent a message in this channel yet");
+                }
+              };
             };
+            
             
             [bottom]
             ActionBar {
               [center]
-              Box {
-              spacing: 5;
-                Button add_attachments_button {
-                  label: _("Add attachments");
-                  icon-name: "mail-attachment-symbolic";
-                }
-                Entry{
-                  hexpand: true;
-                  show-emoji-icon: true;
-                  enable-emoji-completion: true;
-                  max-length: 2000;
-                  placeholder-text: _("Message this channel");
-                  extra-menu: messagebar_menu;
-                }
-                Button {
-                  label: _("Send Message");
-                  icon-name: "paper-plane-symbolic";
-                  styles ["suggested-action"]
-                }
-              } 
+              Adw.Clamp {
+                maximum-size: bind chat_clamp.maximum-size;
+                
+                Box {
+                spacing: 5;
+                  Button add_attachments_button {
+                    label: _("Add attachments");
+                    icon-name: "mail-attachment-symbolic";
+                  }
+                  Entry{
+                    hexpand: true;
+                    show-emoji-icon: true;
+                    enable-emoji-completion: true;
+                    max-length: 2000;
+                    placeholder-text: _("Message this channel");
+                    extra-menu: messagebar_menu;
+                  }
+                  Button {
+                    label: _("Send Message");
+                    icon-name: "paper-plane-symbolic";
+                    styles ["suggested-action"]
+                  }
+                } 
+              }
             }
           };
         };
