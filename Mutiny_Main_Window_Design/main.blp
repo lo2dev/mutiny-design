@@ -26,9 +26,108 @@ Adw.ApplicationWindow {
     max-sidebar-width: 290;
     
     sidebar: Adw.NavigationPage {
-      Adw.StatusPage {
-            title: "MainBar";
-      }
+      title: "Mutiny";
+      child: Adw.ToolbarView {
+        [top]
+          Adw.HeaderBar {
+            show-title: true;
+            
+            [start]
+            MenuButton {
+              label: "User Menu";
+              menu-model: user_header_menu;
+              has-frame: false;
+              child: Adw.Avatar {
+                text: "loki#7571";
+                show-initials: true;
+                size: 20;
+              };
+            }
+            
+            [end]
+            MenuButton {
+              label: _("Main Menu");
+              icon-name: "menu-symbolic";
+              menu-model: main_menu;
+              primary: true;
+            }
+          }
+        
+          ScrolledWindow {
+          child: Box {
+          orientation: vertical;
+            
+          ListBox {
+          selection-mode: none;
+          styles ["navigation-sidebar"]
+              ListBoxRow {
+                Adw.ActionRow {
+                title: _("Discover");
+                  [prefix]
+                  Image {
+                    icon-name: "compass2-symbolic";
+                  }
+                }
+              }
+              
+              ListBoxRow {
+                Adw.ActionRow {
+                title: _("Add Server");
+                  [prefix]
+                  Image {
+                    icon-name: "plus-symbolic";
+                  }
+                }
+              }
+            }
+            
+            Separator {
+              margin-end: 10;
+              margin-start: 10;
+            }
+
+            ListBox {
+            selection-mode: browse;
+            styles ["navigation-sidebar"]
+                ListBoxRow {
+                  Adw.ActionRow {
+                  title: "Server";
+                  [prefix]
+                  Adw.Avatar {
+                    text: "Server";
+                    show-initials: true;
+                    size: 18;
+                  }
+                  
+                  [suffix]
+                  Image {
+                    icon-name: "dot-symbolic";
+                  }
+                }
+              }
+              
+              ListBoxRow {
+              styles ["accent"]
+                  Adw.ActionRow {
+                  
+                  title: "Server";
+                  [prefix]
+                  Adw.Avatar {
+                    text: "Server";
+                    show-initials: true;
+                    size: 18;
+                  }
+                  
+                  [suffix]
+                  Image {
+                    icon-name: "online-symbolic";
+                  }
+                }
+              }
+            }
+          };
+        }
+      };
     };
     
     content: Adw.NavigationSplitView inner_view {
@@ -37,44 +136,39 @@ Adw.ApplicationWindow {
       sidebar-width-fraction: 0.355;
       
       sidebar: Adw.NavigationPage {
+      title: "Revolt";
+        child: Adw.ToolbarView {
           [top]
           Adw.HeaderBar {
-            show-title: true;
-          }
-
-          Adw.StatusPage {
-            title: _("SecondBar");
-
-            Button button {
-              visible: false;
-              halign: center;
-              can-shrink: true;
-              label: _("Open Content");
-              action-name: "navigation.push";
-              action-target: "'content'";
-              styles ["pill"]
+            
+            [end]
+            MenuButton {
+              label: _("Server Menu");
+              menu-model: server_menu;
+              icon-name: "down-symbolic";
             }
           }
         };
+      };
         
         content: Adw.NavigationPage {
-          title: _("Content");
           tag: "content";
           child: Adw.ToolbarView {
 
             [top]
             Adw.HeaderBar {
               show-title: true;
-              title-widget: Adw.WindowTitle {
-                title: "Content";
-                subtitle: "Content description";
-              };
-              
+
               [start]
               Button {
                 label: _("Toggle Sidebar");
                 icon-name: "dock-left-symbolic";
               }
+              
+              title-widget: Adw.WindowTitle {
+                title: "Revolt Discussion";
+                subtitle: "On-topic channel for discussions regarding Revolt";
+              };
               
               [end]
               MenuButton channel_header_menu_button {
@@ -84,24 +178,32 @@ Adw.ApplicationWindow {
             }
 
             content: Adw.StatusPage {
-              title: _("Content");
-
-              LinkButton {
-                label: _("API Reference");
-                uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.NavigationSplitView.html";
-              }
+              icon-name: "chat-bubbles-empty-inverted-symbolic";
+              title: _("No messages yet");
+              description: _("No one has sent a message in this channel yet");
             };
             
             [bottom]
             ActionBar {
               [center]
               Box {
+              spacing: 5;
                 Button add_attachments_button {
                   label: _("Add attachments");
                   icon-name: "mail-attachment-symbolic";
                 }
                 Entry{
-                  
+                  hexpand: true;
+                  show-emoji-icon: true;
+                  enable-emoji-completion: true;
+                  max-length: 2000;
+                  placeholder-text: _("Message this channel");
+                  extra-menu: messagebar_menu;
+                }
+                Button {
+                  label: _("Send Message");
+                  icon-name: "paper-plane-symbolic";
+                  styles ["suggested-action"]
                 }
               } 
             }
@@ -110,6 +212,39 @@ Adw.ApplicationWindow {
     };
   };
 }
+
+menu main_menu {
+  item ("Preferences")
+  item ("About Mutiny")
+}
+
+
+menu user_header_menu {
+  section {
+    item ("Account settings")
+    submenu {
+      label: _("Status");
+      item ("Online")
+      item ("Away")
+      item ("Focus")
+      item ("Do Not Disturb")
+    }
+  }
+  
+  section {
+    item ("Switch Account")
+    item ("Logout")
+  }
+}
+
+
+menu server_menu {
+  section {
+    item ("Server Details")
+    item ("Server Settings")
+  }
+}
+
 
 menu channel_header_menu {
   section actions {
@@ -120,4 +255,8 @@ menu channel_header_menu {
     item ("Channel Details")
     item ("Members")
   }
+}
+
+menu messagebar_menu {
+  item ("Edit in New Window")
 }
