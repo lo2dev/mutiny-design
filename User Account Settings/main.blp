@@ -2,8 +2,11 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.Window {
-  width-request: 560;
-  height-request: 660;
+  width-request: 360;
+  height-request: 460;
+  default-width: 660;
+  default-height: 660;
+  
   content: Box {
     orientation: vertical;
 
@@ -63,13 +66,16 @@ Adw.Window {
                 Adw.ActionRow {
                   title: _("User ID");
                   subtitle: "01G8914GKC48X0KYP1DPH5E1WM";
-                  subtitle-selectable: true;
-                  use-underline: true;
+                  activatable-widget: copy_id_button;
                   styles ["property"]
-                  activatable-widget: Button {
+                  
+                  [suffix]
+                  Button copy_id_button {
                     label: _("Copy User ID");
                     icon-name: "edit-copy-symbolic";
-                  };
+                    valign: center;
+                    has-frame: false;
+                  }
                 }
               }
               
@@ -139,6 +145,7 @@ Adw.Window {
           child: Adw.Clamp {
             maximum-size: 500;
             
+
             Box {
               orientation: vertical;
               margin-start: 10;
@@ -147,31 +154,216 @@ Adw.Window {
               margin-bottom: 25;
               spacing: 25;
               
-              ListBox {
-                selection-mode: none;
-                styles ["boxed-list"]
+              Adw.PreferencesGroup {
+              title: _("This Device");
+              
+                ListBox {
+                  selection-mode: none;
+                  styles ["boxed-list"]
                 
-                Adw.ActionRow {
-                  title: _("Firefox on Windows 10");
-                  subtitle: _("Created a month ago");
-                  icon-name: "earth-symbolic";
-                  styles ["accent"]
+
+                
+                  Adw.ActionRow {
+                    title: _("Firefox on Windows 10");
+                    subtitle: _("Created a month ago");
+                    icon-name: "earth-symbolic";
+                    styles ["accent"]
+                  }
                 }
               }
               
-              ListBox {
+              Adw.PreferencesGroup {
+                title: _("Active Sessions");
+                
+                Button {
+                  label: _("Log out of all other sessions");
+                  margin-bottom: 15;
+                  styles ["destructive-action", "pill"]
+                }
+                
+                ListBox {
                 selection-mode: none;
                 styles ["boxed-list"]
                 
-                Adw.ActionRow {
-                  title: _("Firefox on Windows 10");
-                  subtitle: _("Created a month ago");
-                  icon-name: "earth-symbolic";
+                  Adw.ActionRow {
+                    title: _("Firefox on Windows 10");
+                    subtitle: _("Created a month ago");
+                    icon-name: "earth-symbolic";
+                    
+                    [suffix]
+                    Button {
+                      label: _("Disconnect from Session");
+                      icon-name: "arrow-into-box-symbolic";
+                      valign: center;
+                      has-frame: false;
+                      styles ["error"]
+                    }
+                  }
                   
-                  activatable-widget: Button {
-                    label: _("Disconnect from Session");
-                    icon-name: "arrow-into-box-symbolic";
-                  };
+                  Adw.ActionRow {
+                    title: _("Firefox on Windows 10");
+                    subtitle: _("Created a month ago");
+                    icon-name: "earth-symbolic";
+                    
+                    [suffix]
+                    Button {
+                      label: _("Disconnect from Session");
+                      icon-name: "arrow-into-box-symbolic";
+                      valign: center;
+                      has-frame: false;
+                      styles ["error"]
+                    }
+                  }
+                  
+                  Adw.ActionRow {
+                    title: _("Firefox on Windows 10");
+                    subtitle: _("Created a month ago");
+                    icon-name: "earth-symbolic";
+                    
+                    [suffix]
+                    Button {
+                      label: _("Disconnect from Session");
+                      icon-name: "arrow-into-box-symbolic";
+                      valign: center;
+                      has-frame: false;
+                      styles ["error"]
+                    }
+                  }
+                  
+                  Adw.ActionRow {
+                    title: _("Firefox on Windows 10");
+                    subtitle: _("Created a month ago");
+                    icon-name: "earth-symbolic";
+                    
+                    [suffix]
+                    Button {
+                      label: _("Disconnect from Session");
+                      icon-name: "arrow-into-box-symbolic";
+                      valign: center;
+                      has-frame: false;
+                      styles ["error"]
+                    }
+                  }
+                  
+                  Adw.ActionRow {
+                    title: _("Firefox on Windows 10");
+                    subtitle: _("Created a month ago");
+                    icon-name: "earth-symbolic";
+                    
+                    [suffix]
+                    Button {
+                      label: _("Disconnect from Session");
+                      icon-name: "arrow-into-box-symbolic";
+                      valign: center;
+                      has-frame: false;
+                      styles ["error"]
+                    }
+                  }
+                  
+                  Adw.ActionRow {
+                    title: _("Firefox on Windows 10");
+                    subtitle: _("Created a month ago");
+                    icon-name: "earth-symbolic";
+                    
+                    [suffix]
+                    Button {
+                      label: _("Disconnect from Session");
+                      icon-name: "arrow-into-box-symbolic";
+                      valign: center;
+                      has-frame: false;
+                      styles ["error"]
+                    }
+                  }
+                  
+                  Adw.ActionRow {
+                    title: _("Firefox on Windows 10");
+                    subtitle: _("Created a month ago");
+                    icon-name: "earth-symbolic";
+                    
+                    [suffix]
+                    Button {
+                      label: _("Disconnect from Session");
+                      icon-name: "arrow-into-box-symbolic";
+                      valign: center;
+                      has-frame: false;
+                      styles ["error"]
+                    }
+                  }
+                  
+                  Adw.ActionRow {
+                    title: _("Firefox on Windows 10");
+                    subtitle: _("Created a month ago");
+                    icon-name: "earth-symbolic";
+                    
+                    [suffix]
+                    Button {
+                      label: _("Disconnect from Session");
+                      icon-name: "arrow-into-box-symbolic";
+                      valign: center;
+                      has-frame: false;
+                      styles ["error"]
+                    }
+                  }
+                  
+                  Adw.ActionRow {
+                    title: _("Firefox on Windows 10");
+                    subtitle: _("Created a month ago");
+                    icon-name: "earth-symbolic";
+                    
+                    [suffix]
+                    Button {
+                      label: _("Disconnect from Session");
+                      icon-name: "arrow-into-box-symbolic";
+                      valign: center;
+                      has-frame: false;
+                      styles ["error"]
+                    }
+                  }
+                  
+                  Adw.ActionRow {
+                    title: _("Firefox on Windows 10");
+                    subtitle: _("Created a month ago");
+                    icon-name: "earth-symbolic";
+                    
+                    [suffix]
+                    Button {
+                      label: _("Disconnect from Session");
+                      icon-name: "arrow-into-box-symbolic";
+                      valign: center;
+                      has-frame: false;
+                      styles ["error"]
+                    }
+                  }
+                  
+                  Adw.ActionRow {
+                    title: _("Firefox on Windows 10");
+                    subtitle: _("Created a month ago");
+                    icon-name: "earth-symbolic";
+                    
+                    [suffix]
+                    Button {
+                      label: _("Disconnect from Session");
+                      icon-name: "arrow-into-box-symbolic";
+                      valign: center;
+                      has-frame: false;
+                      styles ["error"]
+                    }
+                  }
+                  
+                  Adw.ActionRow {
+                    title: _("Firefox on Windows 10");
+                    subtitle: _("Created a month ago");
+                    icon-name: "earth-symbolic";
+                    
+                    [suffix]
+                    Button {
+                      label: _("Disconnect from Session");
+                      icon-name: "arrow-into-box-symbolic";
+                      valign: center;
+                      has-frame: false;
+                      styles ["error"]
+                    }
+                  }
                 }
               }
             }
