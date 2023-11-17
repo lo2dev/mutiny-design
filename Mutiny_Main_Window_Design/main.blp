@@ -3,7 +3,7 @@ using Adw 1;
 
 Adw.ApplicationWindow {
   width-request: 360;
-  height-request: 294;
+  height-request: 350;
   default-width: 1440;
   default-height: 680;
 
@@ -72,7 +72,7 @@ Adw.ApplicationWindow {
               
               ListBoxRow {
                 Adw.ActionRow {
-                title: _("Add Server");
+                title: _("Create a Server");
                   [prefix]
                   Image {
                     icon-name: "plus-symbolic";
@@ -91,7 +91,8 @@ Adw.ApplicationWindow {
             styles ["navigation-sidebar"]
                 ListBoxRow {
                   Adw.ActionRow {
-                  title: "Server";
+                  title: "The Six Seas (the 7th was banned)";
+                  title-lines: 2;
                   [prefix]
                   Adw.Avatar {
                     text: "Server";
@@ -110,7 +111,8 @@ Adw.ApplicationWindow {
               styles ["accent"]
                   Adw.ActionRow {
                   
-                  title: "Server";
+                  title: "The Six Seas (the 7th was banned)";
+                  title-lines: 2;
                   [prefix]
                   Adw.Avatar {
                     text: "Server";
@@ -136,7 +138,7 @@ Adw.ApplicationWindow {
       sidebar-width-fraction: 0.355;
       
       sidebar: Adw.NavigationPage {
-      title: "Revolt";
+      title: "The Six Seas (the 7th was banned)";
         child: Adw.ToolbarView {
           [top]
           Adw.HeaderBar {
@@ -146,6 +148,17 @@ Adw.ApplicationWindow {
               label: _("Server Menu");
               menu-model: server_menu;
               icon-name: "down-symbolic";
+            }
+          }
+          
+          Box {
+            orientation: vertical;
+            
+            Picture server_banner {
+              can-shrink: true;
+              content-fit: cover;
+              margin-start: 10;
+              margin-end: 10;
             }
           }
         };
@@ -180,10 +193,54 @@ Adw.ApplicationWindow {
             content: ScrolledWindow {
               child: Adw.Clamp chat_clamp {
               maximum-size: 1000;
-                Adw.StatusPage {
+                 /*Adw.StatusPage {
                   icon-name: "chat-bubbles-empty-inverted-symbolic";
                   title: _("No messages yet");
                   description: _("No one has sent a message in this channel yet");
+                } */
+                
+                Adw.StatusPage {
+                  icon-name: "nudity-symbolic";
+                  title: _("Content Warning!");
+                  description: _("This channel is marked as NSFW");
+                  
+                  
+                  
+                  Box {
+                  orientation: vertical;
+                  spacing: 25;
+                  
+                  
+                    ListBox {
+                    selection-mode: none;
+                    styles[ "boxed-list"]
+                    
+                      Adw.ActionRow {
+                        title: _("I fully awknodlege that entering the following channel can result in permanent brain damange and Revolt is not respoinsible for it");
+                        activatable-widget: cw_warning_checkbox;
+                      
+                        [suffix]
+                        CheckButton cw_warning_checkbox {}
+                      }
+                    }
+                  
+                    Box {
+                      halign: center;
+                      spacing: 10;
+                      
+                      Button {
+                        label: _("Cancel");
+                        
+                        styles ["pill", "suggested-action"]
+                      }
+                      
+                      Button {
+                        label: _("I accept the risk");
+                        sensitive: bind cw_warning_checkbox.active;
+                        styles ["pill"]
+                      }
+                    }
+                  }
                 }
               };
             };
@@ -197,6 +254,7 @@ Adw.ApplicationWindow {
                 
                 Box {
                 spacing: 5;
+                
                   Button add_attachments_button {
                     label: _("Add attachments");
                     icon-name: "mail-attachment-symbolic";
@@ -250,8 +308,16 @@ menu user_header_menu {
 
 menu server_menu {
   section {
+    item ("Edit Identity")
+  }
+  section {
     item ("Server Details")
     item ("Server Settings")
+  }
+  
+  section {
+    item ("Report Server")
+    item ("Leave Server")
   }
 }
 
