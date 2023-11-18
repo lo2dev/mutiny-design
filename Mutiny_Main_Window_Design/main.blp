@@ -195,7 +195,7 @@ Adw.ApplicationWindow {
               maximum-size: 1000;
                  /*Adw.StatusPage {
                   icon-name: "chat-bubbles-empty-inverted-symbolic";
-                  title: _("No messages yet");
+                  title: _("Empty");
                   description: _("No one has sent a message in this channel yet");
                 } */
                 
@@ -213,10 +213,11 @@ Adw.ApplicationWindow {
                   
                     ListBox {
                     selection-mode: none;
+                    halign: center;
                     styles[ "boxed-list"]
                     
                       Adw.ActionRow {
-                        title: _("I fully awknodlege that entering the following channel can result in permanent brain damange and Revolt is not respoinsible for it");
+                        title: _("I confirm that I am at least 18 years old.");
                         activatable-widget: cw_warning_checkbox;
                       
                         [suffix]
@@ -235,7 +236,7 @@ Adw.ApplicationWindow {
                       }
                       
                       Button {
-                        label: _("I accept the risk");
+                        label: _("Enter Channel");
                         sensitive: bind cw_warning_checkbox.active;
                         styles ["pill"]
                       }
@@ -300,7 +301,12 @@ menu user_header_menu {
   }
   
   section {
-    item ("Switch Account")
+    submenu {
+      label: _("Switch Account");
+      item ("Account 1")
+      item ("Account 2")
+      item ("Account 3")
+    }
     item ("Logout")
   }
 }
