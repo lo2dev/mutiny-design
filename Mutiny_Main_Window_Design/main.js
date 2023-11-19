@@ -44,7 +44,7 @@ notification.set_body("epic");
 notification.set_default_action("app.notification-reply");
 notification.add_button("Reply", "app.notification-reply");
 notification.add_button("Mark as Read", "app.notification-mark-as-read");
-notification.add_button("Turn on DnD", "app.notification-turn-on-dnd");
+notification.add_button("Do Not Disturb", "app.notification-turn-on-dnd");
 
 //const icon = new Gio.FileIcon(builder.resolve("./tim.png"));
 
