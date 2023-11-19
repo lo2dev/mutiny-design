@@ -1,0 +1,60 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage content_warning_page {
+  Adw.StatusPage {
+	icon-name: "nudity-symbolic";
+	title: _("Content Warning!");
+	description: _("This channel contains mature content.");
+
+	Box {
+	  orientation: vertical;
+	  spacing: 25;
+
+	  ListBox {
+	    selection-mode: none;
+	    halign: center;
+
+	    styles [
+	      "boxed-list"
+	    ]
+
+	    Adw.ActionRow {
+	      title: _("I confirm that I am at least 18 years old.");
+	      activatable-widget: cw_warning_checkbox;
+
+	      styles [
+					"warning"
+	      ]
+
+	      [suffix]
+	      CheckButton cw_warning_checkbox {}
+	    }
+	  }
+
+	  Box {
+	    halign: center;
+	    spacing: 10;
+
+	    Button {
+	      label: _("Cancel");
+
+	      styles [
+					"pill"
+	      ]
+	    }
+
+	    Button {
+	      label: _("Enter Channel");
+	      sensitive: bind cw_warning_checkbox.active;
+
+	      styles [
+					"pill"
+	      ]
+	    }
+	  }
+    }
+  }
+}
+
+

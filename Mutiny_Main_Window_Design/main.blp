@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-Adw.ApplicationWindow {
+template $MutinyWindow: Adw.ApplicationWindow {
   width-request: 360;
   height-request: 350;
   default-width: 1440;
@@ -9,13 +9,15 @@ Adw.ApplicationWindow {
 
   Adw.Breakpoint {
     condition ("max-width: 860sp")
+
     setters {
       outer_view.collapsed: true;
     }
   }
-  
+
   Adw.Breakpoint {
     condition ("max-width: 500sp")
+
     setters {
       outer_view.collapsed: true;
       inner_view.collapsed: true;
@@ -24,55 +26,85 @@ Adw.ApplicationWindow {
 
   content: Adw.OverlaySplitView outer_view {
     max-sidebar-width: 290;
-    
+
     sidebar: Adw.NavigationPage {
       title: "Mutiny";
+
       child: Adw.ToolbarView {
         [top]
-          Adw.HeaderBar {
-            show-title: true;
-            
-            [start]
-            MenuButton {
-              label: "User Menu";
-              menu-model: user_header_menu;
-              has-frame: false;
-              child: Adw.Avatar {
-                text: "loki#7571";
-                show-initials: true;
-                size: 20;
-              };
-            }
-            
-            [end]
-            MenuButton {
-              label: _("Main Menu");
-              icon-name: "menu-symbolic";
-              menu-model: main_menu;
-              primary: true;
-            }
+        Adw.HeaderBar {
+          show-title: true;
+
+          [start]
+          MenuButton {
+            label: "User Menu";
+            menu-model: user_header_menu;
+            has-frame: false;
+
+            child: Adw.Avatar {
+              text: "loki#7571";
+              show-initials: true;
+              size: 20;
+            };
           }
-        
-          ScrolledWindow {
+
+          [end]
+          MenuButton {
+            label: _("Main Menu");
+            icon-name: "open-menu-symbolic";
+            menu-model: main_menu;
+            primary: true;
+          }
+        }
+
+        ScrolledWindow {
           child: Box {
-          orientation: vertical;
-            
-          ListBox {
-          selection-mode: none;
-          styles ["navigation-sidebar"]
+            orientation: vertical;
+
+            ListBox {
+              selection-mode: none;
+
+              styles [
+                "navigation-sidebar"
+              ]
+
               ListBoxRow {
                 Adw.ActionRow {
-                title: _("Discover");
+                  title: _("Friends");
+
+                  [prefix]
+                  Image {
+                    icon-name: "people-symbolic";
+                  }
+                }
+              }
+
+              ListBoxRow {
+                Adw.ActionRow {
+                  title: _("Saved Notes");
+
+                  [prefix]
+                  Image {
+                    icon-name: "notepad-symbolic";
+                  }
+                }
+              }
+
+              ListBoxRow {
+                Adw.ActionRow {
+                  title: _("Discover");
+
                   [prefix]
                   Image {
                     icon-name: "compass2-symbolic";
                   }
                 }
               }
-              
+
               ListBoxRow {
                 Adw.ActionRow {
-                title: _("Create a Server");
+                  title: _("Create a Server");
+
                   [prefix]
                   Image {
                     icon-name: "plus-symbolic";
@@ -80,46 +112,54 @@ Adw.ApplicationWindow {
                 }
               }
             }
-            
+
             Separator {
               margin-end: 10;
               margin-start: 10;
             }
 
             ListBox {
-            selection-mode: browse;
-            styles ["navigation-sidebar"]
-                ListBoxRow {
-                  Adw.ActionRow {
+              selection-mode: browse;
+
+              styles [
+                "navigation-sidebar"
+              ]
+
+              ListBoxRow {
+                Adw.ActionRow {
                   title: "The Six Seas (the 7th was banned)";
-                  title-lines: 2;
+                  title-lines: 1;
+
                   [prefix]
                   Adw.Avatar {
                     text: "Server";
                     show-initials: true;
                     size: 18;
                   }
-                  
+
                   [suffix]
                   Image {
                     icon-name: "dot-symbolic";
                   }
                 }
               }
-              
+
               ListBoxRow {
-              styles ["accent"]
-                  Adw.ActionRow {
-                  
-                  title: "The Six Seas (the 7th was banned)";
-                  title-lines: 2;
+                styles [
+                  "accent"
+                ]
+
+                Adw.ActionRow {
+                  title: "deez";
+                  title-lines: 1;
+
                   [prefix]
                   Adw.Avatar {
-                    text: "Server";
+                    text: "deez";
                     show-initials: true;
                     size: 18;
                   }
-                  
+
                   [suffix]
                   Image {
                     icon-name: "online-symbolic";
@@ -131,18 +171,18 @@ Adw.ApplicationWindow {
         }
       };
     };
-    
+
     content: Adw.NavigationSplitView inner_view {
       min-sidebar-width: 290;
       max-sidebar-width: 320;
       sidebar-width-fraction: 0.355;
-      
+
       sidebar: Adw.NavigationPage {
-      title: "The Six Seas (the 7th was banned)";
+        title: "The Six Seas (the 7th was banned)";
+
         child: Adw.ToolbarView {
           [top]
           Adw.HeaderBar {
-            
             [end]
             MenuButton {
               label: _("Server Menu");
@@ -150,10 +190,10 @@ Adw.ApplicationWindow {
               icon-name: "down-symbolic";
             }
           }
-          
+
           Box {
             orientation: vertical;
-            
+
             Picture server_banner {
               can-shrink: true;
               content-fit: cover;
@@ -163,143 +203,113 @@ Adw.ApplicationWindow {
           }
         };
       };
-        
-        content: Adw.NavigationPage {
-          tag: "content";
-          child: Adw.ToolbarView {
 
-            [top]
-            Adw.HeaderBar {
-              show-title: true;
+      content: Adw.NavigationPage {
+        tag: "content";
 
-              [start]
-              Button {
-                label: _("Toggle Sidebar");
-                icon-name: "dock-left-symbolic";
-              }
-              
-              title-widget: Adw.WindowTitle {
-                title: "Revolt Discussion";
-                subtitle: "On-topic channel for discussions regarding Revolt";
-              };
-              
-              [end]
-              MenuButton channel_header_menu_button {
-                menu-model: channel_header_menu;
-                icon-name: "view-more-symbolic";
-              } 
+        child: Adw.ToolbarView {
+          // reveal-bottom-bars: false; // use this for when content warning is visible
+
+          [top]
+          Adw.HeaderBar {
+            show-title: true;
+
+            [start]
+            Button {
+              label: _("Toggle Sidebar");
+              icon-name: "dock-left-symbolic";
             }
 
-            content: ScrolledWindow {
-              child: Adw.Clamp chat_clamp {
+            title-widget: Adw.WindowTitle {
+              title: "Revolt Discussion";
+              subtitle: "On-topic channel for discussions regarding Revolt";
+            };
+
+            [end]
+            MenuButton channel_header_menu_button {
+              menu-model: channel_header_menu;
+              icon-name: "view-more-symbolic";
+            }
+          }
+
+          content: ScrolledWindow {
+            child: Adw.Clamp chat_clamp {
               maximum-size: 1000;
-                 /*Adw.StatusPage {
+
+              /*Adw.StatusPage {
                   icon-name: "chat-bubbles-empty-inverted-symbolic";
                   title: _("Empty");
                   description: _("No one has sent a message in this channel yet");
                 } */
-                
-                Adw.StatusPage {
-                  icon-name: "nudity-symbolic";
-                  title: _("Content Warning!");
-                  description: _("This channel is marked as NSFW");
-                  
-                  
-                  
-                  Box {
-                  orientation: vertical;
-                  spacing: 25;
-                  
-                  
-                    ListBox {
-                    selection-mode: none;
-                    halign: center;
-                    styles[ "boxed-list"]
-                    
-                      Adw.ActionRow {
-                        title: _("I confirm that I am at least 18 years old.");
-                        activatable-widget: cw_warning_checkbox;
-                      
-                        [suffix]
-                        CheckButton cw_warning_checkbox {}
-                      }
-                    }
-                  
-                    Box {
-                      halign: center;
-                      spacing: 10;
-                      
-                      Button {
-                        label: _("Cancel");
-                        
-                        styles ["pill", "suggested-action"]
-                      }
-                      
-                      Button {
-                        label: _("Enter Channel");
-                        sensitive: bind cw_warning_checkbox.active;
-                        styles ["pill"]
-                      }
-                    }
-                  }
-                }
-              };
             };
-            
-            
-            [bottom]
-            ActionBar {
-              [center]
-              Adw.Clamp {
-                maximum-size: bind chat_clamp.maximum-size;
-                
-                Box {
+          };
+
+          [bottom]
+          ActionBar {
+            [center]
+            Adw.Clamp {
+              maximum-size: bind chat_clamp.maximum-size;
+
+              Box {
                 spacing: 5;
-                
-                  Button add_attachments_button {
-                    label: _("Add attachments");
-                    icon-name: "mail-attachment-symbolic";
-                  }
-                  Entry{
-                    hexpand: true;
-                    show-emoji-icon: true;
-                    enable-emoji-completion: true;
-                    max-length: 2000;
-                    placeholder-text: _("Message this channel");
-                    extra-menu: messagebar_menu;
-                  }
-                  Button {
-                    label: _("Send Message");
-                    icon-name: "paper-plane-symbolic";
-                    styles ["suggested-action"]
-                  }
-                } 
+
+                Button add_attachments_button {
+                  label: _("Add attachments");
+                  icon-name: "mail-attachment-symbolic";
+                }
+
+                Entry {
+                  hexpand: true;
+                  show-emoji-icon: true;
+                  enable-emoji-completion: true;
+                  max-length: 2000;
+                  placeholder-text: _("Message this channel");
+                  extra-menu: messagebar_menu;
+                }
+
+                Button preferences_menu_button {
+                  label: _("Send Message");
+                  icon-name: "paper-plane-symbolic";
+
+                  styles [
+                    "suggested-action"
+                  ]
+                }
               }
             }
-          };
+          }
         };
+      };
     };
   };
 }
 
 menu main_menu {
-  item ("Preferences")
-  item ("About Mutiny")
-}
+  section {
+    item (_("Discover"))
+    item (_("Create a Server"))
+  }
 
+  section {
+    item (_("Preferences"))
+    item (_("Keyboard Shortcuts"))
+    item (_("About Mutiny"), "parent.openAboutWindow")
+  }
+}
 
 menu user_header_menu {
   section {
-    item ("Account settings")
+    item (_("Account settings"))
+
     submenu {
       label: _("Status");
-      item ("Online")
-      item ("Away")
-      item ("Focus")
-      item ("Do Not Disturb")
+      item (_("Online"))
+      item (_("Away"))
+      item (_("Focus"))
+      item (_("Do Not Disturb"))
     }
   }
-  
+
   section {
     submenu {
       label: _("Switch Account");
@@ -307,38 +317,40 @@ menu user_header_menu {
       item ("Account 2")
       item ("Account 3")
     }
-    item ("Logout")
+
+    item (_("Logout"))
   }
 }
-
 
 menu server_menu {
   section {
-    item ("Edit Identity")
+    item (_("Edit Identity"))
   }
+
   section {
-    item ("Server Details")
-    item ("Server Settings")
+    item (_("Create Invite"))
+    item (_("Server Details"))
+    item (_("Server Settings"))
   }
-  
+
   section {
-    item ("Report Server")
-    item ("Leave Server")
+    item (_("Report Server"))
+    item (_("Leave Server"))
   }
 }
 
-
 menu channel_header_menu {
   section actions {
-    item ("Search")
+    item (_("Search"))
   }
-  
+
   section information {
-    item ("Channel Details")
-    item ("Members")
+    item (_("Members"))
+    item (_("Channel Details"))
   }
 }
 
 menu messagebar_menu {
-  item ("Edit in New Window")
+  item (_("Edit in New Window"))
 }
+
