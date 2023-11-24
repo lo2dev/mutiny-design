@@ -3,6 +3,45 @@ import { gettext as _ } from "gettext";
 import Adw from "gi://Adw";
 import Gtk from "gi://Gtk";
 
+const channels_list_view = workbench.builder.get_object("channels_list_view");
+
+//Model
+const channel_string_model = new Gtk.StringList({
+  strings: ["Channel 1", "Channel 2", "Channel 3"],
+});
+
+const channel_model = new Gtk.SingleSelection({ model: channel_string_model });
+
+//View
+channel_model.connect("selection-changed", () => {
+  const selected_item = model.get_selected();
+  console.log(
+    `Model item selected from view: ${channel_model.model.get_string(
+      selected_item,
+    )}`,
+  );
+});
+
+channels_list_view.model = channel_model;
+
+const servers_list_view = workbench.builder.get_object("servers_list_view");
+
+const server_string_model = new Gtk.StringList({
+  strings: [
+    "The Six Seas (the 7th was banned)",
+    "deez",
+    "Mission Hee Hee",
+    "Unofficial Clients",
+    "m",
+    "Revolt Team",
+    "Mutiny",
+  ],
+});
+
+const server_model = new Gtk.SingleSelection({ model: server_string_model });
+
+servers_list_view.model = server_model;
+
 const server_banner = workbench.builder.get_object("server_banner");
 
 const server_banner_source = Gio.File.new_for_uri(

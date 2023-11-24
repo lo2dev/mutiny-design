@@ -70,17 +70,6 @@ template $MutinyWindow: Adw.ApplicationWindow {
 
               ListBoxRow {
                 Adw.ActionRow {
-                  title: _("Friends");
-
-                  [prefix]
-                  Image {
-                    icon-name: "people-symbolic";
-                  }
-                }
-              }
-
-              ListBoxRow {
-                Adw.ActionRow {
                   title: _("Saved Notes");
 
                   [prefix]
@@ -100,22 +89,35 @@ template $MutinyWindow: Adw.ApplicationWindow {
                   }
                 }
               }
-
-              ListBoxRow {
-                Adw.ActionRow {
-                  title: _("Create a Server");
-
-                  [prefix]
-                  Image {
-                    icon-name: "plus-symbolic";
-                  }
-                }
-              }
             }
 
             Separator {
               margin-end: 10;
               margin-start: 10;
+            }
+
+            ListView servers_list_view {
+              styles ["navigation-sidebar"]
+              factory: BuilderListItemFactory {
+                template ListItem {
+                  child: Adw.ActionRow {
+                    title: bind template.item as <StringObject>.string;
+                    title-lines: 1;
+
+                    [prefix]
+                    Adw.Avatar {
+                      text: bind template.item as <StringObject>.string;
+                      show-initials: true;
+                      size: 18;
+                    }
+
+                    [suffix]
+                    Image {
+                      icon-name: "dot-symbolic";
+                    }
+                  };
+                }
+              };
             }
 
             ListBox {
@@ -124,48 +126,6 @@ template $MutinyWindow: Adw.ApplicationWindow {
               styles [
                 "navigation-sidebar"
               ]
-
-              ListBoxRow {
-                Adw.ActionRow {
-                  title: "The Six Seas (the 7th was banned)";
-                  title-lines: 1;
-
-                  [prefix]
-                  Adw.Avatar {
-                    text: "Server";
-                    show-initials: true;
-                    size: 18;
-                  }
-
-                  [suffix]
-                  Image {
-                    icon-name: "dot-symbolic";
-                  }
-                }
-              }
-
-              ListBoxRow {
-                styles [
-                  "accent"
-                ]
-
-                Adw.ActionRow {
-                  title: "deez";
-                  title-lines: 1;
-
-                  [prefix]
-                  Adw.Avatar {
-                    text: "deez";
-                    show-initials: true;
-                    size: 18;
-                  }
-
-                  [suffix]
-                  Image {
-                    icon-name: "online-symbolic";
-                  }
-                }
-              }
             }
           };
         }
@@ -191,15 +151,34 @@ template $MutinyWindow: Adw.ApplicationWindow {
             }
           }
 
-          Box {
-            orientation: vertical;
-
-            Picture server_banner {
-              can-shrink: true;
-              content-fit: cover;
-              margin-start: 10;
-              margin-end: 10;
-            }
+          ScrolledWindow {
+            child: Box {
+              orientation: vertical;
+              
+              Picture server_banner {
+                can-shrink: true;
+                content-fit: cover;
+                margin-start: 10;
+                margin-end: 10;
+              }
+              
+              ListView channels_list_view {
+                styles ["navigation-sidebar"]
+                enable-rubberband: true;
+                factory: BuilderListItemFactory {
+                  template ListItem {
+                    child: Box {
+                      Gtk.Label {
+                        label: bind template.item as <StringObject>.string;
+                        height-request: 10;
+                        margin-start: 12;
+                        margin-end: 12;
+                      }
+                    };
+                  }
+                };
+              }
+            };
           }
         };
       };
@@ -286,7 +265,6 @@ template $MutinyWindow: Adw.ApplicationWindow {
 
 menu main_menu {
   section {
-    item (_("Discover"))
     item (_("Create a Server"))
   }
 
@@ -308,6 +286,8 @@ menu user_header_menu {
       item (_("Focus"))
       item (_("Do Not Disturb"))
     }
+    
+    item(_("Friends"))
   }
 
   section {

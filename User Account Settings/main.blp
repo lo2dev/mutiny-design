@@ -60,6 +60,7 @@ Adw.Window {
                   title: _("Username");
                   text: "loki#7571";
                   show-apply-button: true;
+                  sensitive: false;
                   // text-length: 32; // should be available since libadw 1.5
                 }
                 
@@ -84,9 +85,18 @@ Adw.Window {
                 selection-mode: none;
                 styles ["boxed-list"]
                 
-                Adw.ActionRow {
-                  title: _("TODO");
-                  subtitle: "Add description";
+                Adw.ExpanderRow {
+                  title: _("Description");
+                  subtitle: "Write your description";
+
+                  
+                  TextView {
+                    top-margin: 5;
+                    bottom-margin: 5;
+                    left-margin: 10;
+                    right-margin: 10;
+                    wrap-mode: char;
+                  }
                 }
               }
               
@@ -98,21 +108,24 @@ Adw.Window {
                   title: _("Email");
                   text: "yourmom@myhouse.cum";
                   show-apply-button: true;
+                  sensitive: false;
                 }
                 
                 Adw.PasswordEntryRow {
                   title: _("Password");
                   text: "holymolyholymolyholymoylhonlym";
                   show-apply-button: true;
+                  sensitive: false;
                 }
               }
 
               ListBox {
                 selection-mode: none;
-                styles ["boxed-list"]
+                styles ["boxed-list", "accent"]
                 
                 Adw.SwitchRow {
                   title: _("Two-factor Authentication");
+                  subtitle: _("Enable 2FA for better security!");
                 }
               }
               
@@ -138,8 +151,6 @@ Adw.Window {
         name: "page2";
         title: _("Sessions");
         icon-name: "computer-symbolic";
-        badge-number: 0;
-        needs-attention: true;
         use-underline: true;
         child: ScrolledWindow {
           child: Adw.Clamp {

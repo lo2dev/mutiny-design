@@ -1,0 +1,116 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.PreferencesWindow pref_window {
+  default-width: 800;
+  default-height: 600;
+  title: _("Preferences");
+
+  Adw.PreferencesPage appearance_page {
+    title: _("Appearance");
+    icon-name: "brush-monitor-symbolic";
+
+    Adw.PreferencesGroup {
+      title: _("Color Settings");
+      description: _("Change the color-scheme of the application.");
+
+      Adw.ComboRow theme_switch{
+        title: _("Theme");
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _("Text Settings");
+      description: _("Customize the appearance of text in the application.");
+
+      Adw.SpinRow {
+        title: _("Font Size");
+        adjustment: Gtk.Adjustment {
+          lower: 5;
+          upper: 20;
+          step-increment: 1;
+          value: 11;
+        };
+      }
+
+      Adw.ActionRow {
+        title: _("Font Color");
+
+        [suffix]
+        Gtk.ColorDialogButton {
+          halign: center;
+          valign: center;
+          dialog: ColorDialog {};
+        }
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _("API References");
+
+      Box {
+        orientation: horizontal;
+        margin-top: 12;
+
+        LinkButton {
+          label: _("PreferencesWindow");
+          uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.PreferencesWindow.html";
+        }
+
+        LinkButton {
+          label: _("PreferencesPage");
+          uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.PreferencesPage.html";
+        }
+
+        LinkButton {
+          label: _("PreferencesGroup");
+          uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.PreferencesGroup.html";
+        }
+
+        LinkButton {
+          label: _("PreferencesRow");
+          uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.PreferencesRow.html";
+        }
+      }
+    }
+  }
+
+  Adw.PreferencesPage {
+    title: _("Behavior");
+    icon-name: "settings-symbolic";
+
+    Adw.PreferencesGroup {
+      title: _("Client Settings");
+      //description: _("Change how the chat behaves.");
+
+      Adw.SwitchRow {
+        title: _("Link previews");
+        subtitle: _("Whether to let links embed");
+      }
+      
+      Adw.SwitchRow {
+        title: _("Hide channels with mature content");
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _("Network Settings");
+
+      Adw.SwitchRow {
+        title: _("Enable Data Saver");
+        subtitle: _("Prevent all media from being fetched. You can sill manually fetch individual media");
+      }
+    }
+  }
+}
+
+Adw.StatusPage subpage {
+  description: _("Custom Subpage");
+
+  Gtk.Button subpage_button {
+    label: _("Go back");
+    halign: center;
+    valign: center;
+    styles ["suggested-action", "pill"]
+  }
+}
