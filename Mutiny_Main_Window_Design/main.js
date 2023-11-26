@@ -51,7 +51,18 @@ const server_banner_source = Gio.File.new_for_uri(
 server_banner.file = server_banner_source;
 
 const parent = workbench.builder.get_object("MutinyWindow");
-const button = workbench.builder.get_object("preferences_menu_button");
+const parent_group = new Gio.SimpleActionGroup();
+parent.insert_action_group("parent", parent_group);
+
+const open_about_window_action = new Gio.SimpleAction({
+  name: "open-about-window",
+});
+
+open_about_window_action.connect("activate", (action) => {
+  openAboutWindow();
+});
+
+parent_group.add_action(open_about_window_action);
 
 function openAboutWindow() {
   const dialog = new Adw.AboutWindow({
@@ -70,8 +81,6 @@ function openAboutWindow() {
 
   dialog.present();
 }
-
-button.connect("clicked", openAboutWindow);
 
 const { application, builder } = workbench;
 

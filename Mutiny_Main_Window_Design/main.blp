@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $MutinyWindow: Adw.ApplicationWindow {
+Adw.ApplicationWindow MutinyWindow {
   width-request: 360;
   height-request: 350;
   default-width: 1440;
@@ -220,6 +220,18 @@ template $MutinyWindow: Adw.ApplicationWindow {
                   title: _("Empty");
                   description: _("No one has sent a message in this channel yet");
                 } */
+                
+                Box {
+                  orientation: vertical;
+                  spacing: 10;
+                  margin-top: 10;
+                  margin-bottom: 10;
+                  
+                  // TODO: chat message desig
+                  Box {
+                    
+                  }
+                }
             };
           };
 
@@ -271,7 +283,7 @@ menu main_menu {
   section {
     item (_("Preferences"))
     item (_("Keyboard Shortcuts"))
-    item (_("About Mutiny"), "parent.openAboutWindow")
+    item (_("About Mutiny"), "parent.open-about-window")
   }
 }
 
